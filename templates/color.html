@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Browse Cultural Heritage by Color</title>
+<!-- Latest compiled and minified CSS -->
+{% include 'head-css.html' %}
+</head>
+<body>
+<div id="images">
+    {% for record in records %}
+    <img src="{{ record.thumb }}" />
+    {% endfor %}
+</div>
+
+{% include 'end-body-js.html' %}
+</body>
+</html>

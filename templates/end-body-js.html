@@ -1,0 +1,29 @@
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap3-typeahead.min.js') }}"></script>
+
+    <script>
+        // Get a list of available colors
+        var colors;
+        $.getJSON("/colors", function(data){
+            colors = data;
+        })
+
+        load_images = function(color) {
+            $.getJSON(
+                "/color/" + color,
+                function(data) {
+                    for (d in data) {
+                        $("#images").append("<a  href='" + data[d].url + "'><img class='imgthang' alt='" + data[d].title + "' src='" + data[d].thumb + "' /></a>")}
+                }
+            )
+        }
+    $("#sub").on("click", function(e) {
+        e.preventDefault();
+        load_images($("#the-color").val())
+    })
+
+    </script>
