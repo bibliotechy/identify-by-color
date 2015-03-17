@@ -4,20 +4,41 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='bootstrap3-typeahead.min.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='spectrum.js') }}"></script>
     <script>
+
+
         // Get a list of available colors
         var colors;
         $.getJSON("/colors", function(data){
             colors = data;
+            $("#palette").spectrum({
+               preferredFormat: "hex", 
+               showPaletteOnly: true,
+               showPalette:true,
+               hideAfterPaletteSelect:true,
+               color: colors[0],
+               palette: [colors],
+               flat: true,
+               showInput: true,
+                change: function(color) {
+                 load_images(color.toHexString().slice(1));
+                 }
+});
+
         })
 
         load_images = function(color) {
             $.getJSON(
                 "/color/" + color,
                 function(data) {
+                  $("#images").empty();
                     for (d in data) {
-                        $("#images").append("<a  href='" + data[d].url + "'><img class='imgthang' alt='" + data[d].title + "' src='" + data[d].thumb + "' /></a>")}
+                        $("#images").append("<div class='img-responsive img-thumbnail image'>" +
+                    "<a href='" + data[d].url + "'>" +
+                    "<img title='" + data[d].title + "' alt='" + data[d].title +
+                    "' src='" + data[d].thumb + "' /></a></div>")}
+
                 }
             )
         }

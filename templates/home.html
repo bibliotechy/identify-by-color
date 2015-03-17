@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+  <head lang="en">
     <meta charset="UTF-8">
     <title>Browse Cultural Heritage by Color</title>
-<!-- Latest compiled and minified CSS -->
-{% include 'head-css.html' %}
-</head>
-<body>
-  <div class="jumbotron">
+    <!-- Latest compiled and minified CSS -->
+    {% include 'head-css.html' %}
+  </head>
+  <body>
+    <div class="jumbotron">
       <div class="container">
-    <form class="" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" id="the-color">
-        </div>
-        <button type="submit" class="btn btn-default" id="sub">Submit</button>
-    </form>
-  </div>
+         <div class="container">
+            <input id="palette" type="color" />
+         </div>
       </div>
-<div id="images">
+    </div>
+    <div id="images" class="container-fluid">
 
-</div>
+    </div>
 
-{% include 'end-body-js.html' %}
-</body>
+    {% include 'end-body-js.html' %}
+  </body>
 </html>

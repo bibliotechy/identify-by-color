@@ -7,9 +7,14 @@
 {% include 'head-css.html' %}
 </head>
 <body>
-<div id="images">
+<h2>Images containing {{name}}</h2>
+<div id="images container-fluid">
     {% for record in records %}
-    <img src="{{ record.thumb }}" />
+    <div class="img-responsive img-thumbnail image">
+        <a href="{{ record.url }}" title="{{record.title}}" alt="{{record.title}}"/>
+            <img src="{{ record.thumb }}" />
+        </a>
+    </div>
     {% endfor %}
 </div>
 

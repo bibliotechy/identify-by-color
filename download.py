@@ -29,10 +29,13 @@ def get_item_details(filename):
                 "thumb" : x['object'],
                 "url"   : x['isShownAt'],
                 }
-            if isinstance(x['sourceResource']['title'], basestring):
-                record["title"] = x['sourceResource']['title']
+            if x['sourceResource'].get("title", None):
+                if isinstance(x['sourceResource']['title'], basestring):
+                    record["title"] = x['sourceResource']['title']
+                else:
+                    record["title"] = x['sourceResource']['title'][0]
             else:
-                record["title"] = x['sourceResource']['title'][0]
+                record["title"] = "Untitled"
             essentials.extend([record])
     return essentials
 
@@ -61,8 +64,9 @@ def get_image_colors(image):
         if css3_colors.get(css3_hex, None):
             css3_colors[css3_hex] += pixel_count
         else:
-            css3_colors[css3_hex]=  pixel_count
+            css3_colors[css3_hex] =  pixel_count
 
+    # find the top 5 percentages
     if len(css3_colors) >= 5:
         lowest_pixel_value = sorted(css3_colors.values())[-5]
     else:
@@ -86,7 +90,7 @@ def run(deet):
         add_to_redis(deet, colors)
 
 if __name__ == "__main__":
-    p = Pool(6)
+    p = Pool(4)
     deets = get_item_details(argv[1])
     p.map(run, deets)
     p.close()
