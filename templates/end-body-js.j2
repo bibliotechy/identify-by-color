@@ -30,7 +30,10 @@
            });
              color_and_name = [];
              color_and_name = color_and_name.concat.apply(color_and_name,colors);
-             $(".typeahead").typeahead({ source: color_and_name});
+             $(".typeahead").typeahead({
+                 source: color_and_name,
+                 afterSelect: function(color) { document.location.href = "/" + color }
+             });
         });
 
 
