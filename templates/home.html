@@ -4,20 +4,34 @@
     <meta charset="UTF-8">
     <title>Browse Cultural Heritage by Color</title>
     <!-- Latest compiled and minified CSS -->
-    {% include 'head-css.html' %}
+    {% include 'css.j2' %}
   </head>
   <body>
+  {% include 'nav.j2' %}
     <div class="jumbotron">
+
+        <div class="container">
       <div class="container">
-         <div class="container">
-            <input id="palette" type="color" />
+          <h1>Browse the DPLA by color</h1>
+      </div>
+      <div class="container">
+            <form class="navbar-form navbar-left"  action="/color" role="search">
+        <div class="form-group">
+          <input id="color-search" name="color" type="text" class="form-control typeahead"
+                 data-provide="typeahead"
+                 placeholder="{% if name %} {{ name }} {% else %} Search By Color {% endif %}">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+
          </div>
+
       </div>
     </div>
     <div id="images" class="container-fluid">
 
     </div>
 
-    {% include 'end-body-js.html' %}
+    {% include 'end-body-js.j2' %}
   </body>
 </html>

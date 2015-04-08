@@ -3,13 +3,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='jquery.infinitescroll.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap3-typeahead.min.js') }}"></script>
     <script src="{{ url_for('static', filename='spectrum.js') }}"></script>
     <script>
 
 
+
         // Get a list of available colors
         var colors;
+        var color = {% if hex %} "{{ hex }}" {% else %} "000000" {% endif %};
         $.getJSON("/colors", function(data){
             colors = data;
             $("#palette").spectrum({
@@ -17,16 +20,19 @@
                showPaletteOnly: true,
                showPalette:true,
                hideAfterPaletteSelect:true,
-               color: colors[0],
-               palette: [colors],
-               flat: true,
+               color: color,
+               palette: colors.map(function(x) {return x[0]}),
+               //flat: true,
                showInput: true,
                 change: function(color) {
-                 load_images(color.toHexString().slice(1));
+                 window.location.href =  "/" + color.toHexString().slice(1);
                  }
-});
+           });
+             color_and_name = [];
+             color_and_name = color_and_name.concat.apply(color_and_name,colors);
+             $(".typeahead").typeahead({ source: color_and_name});
+        });
 
-        })
 
         load_images = function(color) {
             $.getJSON(
@@ -42,9 +48,17 @@
                 }
             )
         }
-    $("#sub").on("click", function(e) {
-        e.preventDefault();
-        load_images($("#the-color").val())
-    })
+
+
+    $('#images').infinitescroll({
+
+    navSelector  : "#lower-nav",
+                   // selector for the paged navigation (it will be hidden)
+    nextSelector : "#lower-nav li.next a",
+                   // selector for the NEXT link (to page 2)
+    itemSelector : ".image",
+                   // selector for all items you'll retrieve
+    debug: true
+  });
 
     </script>

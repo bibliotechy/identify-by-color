@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Browse Cultural Heritage by Color</title>
+<!-- Latest compiled and minified CSS -->
+{% include 'css.j2' %}
+{% include 'head-js.j2' %}
+</head>
+<body>
+{% include 'nav.j2' %}
+<h2 class="">{{ pagination.total }} images containing {{name}} </h2>
+<div id="images" class="images container-fluid">
+    {% for record in records %}
+    <div class="img-responsive img-thumbnail image">
+        <a href="{{ record.url }}" title="{{record.title}}" alt="{{record.title}}">
+            <img height="180" src="{{ record.thumb }}" alt="{{ record.title }}" />
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="lower-nav">
+{{ pagination.links }}
+</div>
+
+{% include 'end-body-js.j2' %}
+</body>
+</html>
