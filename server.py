@@ -14,6 +14,7 @@ app.palette = sb.load_palette('css3')
 
 @app.route("/")
 def browse():
+
     return render_template("home.html")
 
 @app.route("/<color>")

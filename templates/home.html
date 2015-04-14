@@ -2,34 +2,48 @@
 <html>
   <head lang="en">
     <meta charset="UTF-8">
-    <title>Browse Cultural Heritage by Color</title>
+    <title>Search DPLA by Color by Color</title>
     <!-- Latest compiled and minified CSS -->
     {% include 'css.j2' %}
   </head>
-  <body>
+  <body style="padding-top: 0px;">
   {% include 'nav.j2' %}
     <div class="jumbotron">
 
-        <div class="container">
-      <div class="container">
-          <h1>Browse the DPLA by color</h1>
+        <div class="container-fluid">
+      <div class="container-fluid">
+          <h2>Search the DPLA by Color</h2>
       </div>
-      <div class="container">
+      <div class="container-fluid">
             <form class="navbar-form navbar-left"  action="/color" role="search">
-        <div class="form-group">
-          <input id="color-search" name="color" type="text" class="form-control typeahead"
-                 data-provide="typeahead"
-                 placeholder="{% if name %} {{ name }} {% else %} Search By Color {% endif %}">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+                <div class="form-group">
+                    <input id="color-search" name="color" type="text" class="form-control typeahead"
+                            data-provide="typeahead" autocomplete="off"
+                            placeholder="{% if name %} {{ name }} {% else %} Search By Color {% endif %}" />
+                </div>
+            <button type="submit" class="btn btn-default">Submit</button>
       </form>
 
          </div>
 
       </div>
     </div>
-    <div id="images" class="container-fluid">
-
+    <div id="motext" class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>A <i>very</i> alpha attempt at searching the DPLA by color, a subset of it anyway.
+                    Currently around 500K items have been color-indexed, but it keeps growing in fits and starts.</p>
+                <p>The palette is limited to colors in the CSS3 Palette, very much inspired by
+                   the <a href="https://collection.cooperhewitt.org/objects/colors/">work of the Cooper Hewitt</a>.
+                </p>
+                <p>Some very naive color clustering has also been employed to help find colors similar to the css3
+                palette. This might have been a bad idea which does not make it to beta. :) </p>
+                <p>The code, very much in need of clean up, is available on <a hreaf="https://github.com/bibliotechy/identify-by-color">Github</a></p>
+                <p>Built by <a href="https://twitter.com/bibliotechy">Chad Nelson</a>, with tons of help from open source
+                developers everywhere.
+                </p>
+            </div>
+        </div>
     </div>
 
     {% include 'end-body-js.j2' %}
