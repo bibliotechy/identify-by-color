@@ -1,0 +1,44 @@
+<html>
+<head>
+
+</head>
+<body>
+    <div id="chart"></div>
+
+    <script src="{{ url_for('static', filename='d3.min.js') }}"></script>
+    <script>
+        var count = {{ count }}
+        var diameter = 900;
+
+        var svg = d3.select('#chart').append('svg')
+            .attr('width', diameter)
+            .attr('height', diameter);
+
+        var bubble = d3.layout.pack()
+          .size([diameter, diameter])
+          .padding(3) // padding between adjacent circles
+          .value(function(d) {return d.count;}); // new data will be loaded to bubble layout
+
+        var nodes = bubble.nodes(count)
+            .filter(function(d) { return !d.children; });
+
+        var vis = svg.selectAll('circle')
+            .data(nodes, function(d) { return d.name; });
+
+            vis.enter().append('circle')
+                .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+                .attr('r', function(d) { return d.r; })
+                .attr('class', function(d) { return d.name })
+                .style({'fill': function(d) { return d.hex } })
+                .on("click", function(d){document.location.href = "/" + d.hex.substring(1)})
+                .append("text")
+                .text(function(d) { return d.name })
+                    .attr("dy", ".3em")
+                    .style({"text-anchor" : "middle"})
+
+
+
+
+</script>
+</body>
+</html>
