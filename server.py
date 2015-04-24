@@ -7,6 +7,7 @@ from redis import StrictRedis
 import colorsys
 import cooperhewitt.swatchbook as sb
 from flask_paginate import Pagination
+from random import choice
 
 app = Flask(__name__)
 app.redis = StrictRedis()
@@ -21,28 +22,32 @@ def browse():
 @app.route("/<color>/page/<int:page>")
 def single_color(color, page=1, per_page=50 ):
 
-
     if not match("[0-9a-fA-F]{6}$", color):
         try:
             color = app.palette.hex(color).strip("#")
         except:
-            return "Better error handling coming soon, but there are a lot of ways to spell a color, yaknowwhaddamean!",  404
+            return redirect(url_for("nope"))
 
-    total = app.redis.zcount("#" + color,0,100)
+    color = "#" + color
+
+    total = app.redis.zcount(color,0,100)
 
     if not total:
-        color = app.palette.closest("#" + color)
+        color,name = app.palette.closest(color)
+
+
 
     startAt = (page -1) * per_page
-    records = app.redis.zrevrange("#" + color,startAt, startAt + per_page -1)
+    records = app.redis.zrevrange(color,startAt, startAt + per_page -1)
 
-    hex,name = sb.closest('css3', "#" + color)
-    href="/" + hex.strip("#") + "/page/{0}"
+    name = app.palette.name(color)
 
-    pagination = Pagination(page=page, total=total, per_page=per_page, href=href, bs_version=3 )
+    pagination_href="/" + color.strip("#") + "/page/{0}"
+
+    pagination = Pagination(page=page, total=total, per_page=per_page, href=pagination_href, bs_version=3 )
 
     return render_template("color.j2", records=[json.loads(record) for record in records ],
-                           hex=hex,name=name, pagination=pagination, orig_color=request.args.get("color",None))
+                           hex=color.strip("#"),name=name, pagination=pagination, orig_color=request.args.get("color",None))
 
 @app.route("/color")
 def redirect_param_to_color():
@@ -50,7 +55,7 @@ def redirect_param_to_color():
     if color:
         return redirect(url_for('single_color',color=color))
     else:
-        return "Nope", 404
+        return redirect(url_for('nope'))
 
 @app.route("/colors")
 def list_available_colors():
@@ -84,6 +89,17 @@ def bubble_viz():
             ]
 
     return render_template('bubble.j2', count=json.dumps(count))
+
+@app.route("/nope")
+def nope():
+    return render_template('nope.j2')
+
+@app.route("/rando-colrissian")
+def random_color():
+    colors = app.redis.keys("#*")
+    color = choice(colors).strip("#")
+    return redirect(url_for('single_color',color=color))
+
 
 def hex_to_hsv(color):
     color =  color.strip("#")
