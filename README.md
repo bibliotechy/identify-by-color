@@ -21,4 +21,4 @@ around using color for access. You can see the application running [here].
 [Python 2.7]: http://python.org/download/
 [Git]: https://git-scm.com/
 [Redis]: http://redis.io
-[DPLA data snapshots]: http://dp.la/info/developers/download/
+[DPLA data snapshot]: http://dp.la/info/developers/download/
