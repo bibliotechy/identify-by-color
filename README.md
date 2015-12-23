@@ -7,13 +7,13 @@ around using color for access. You can see the application running [here].
 ## Install
 
 1. Install [Python 2.7], [Git] and [Redis]
-1. `git clone https://github.com/bibliotechy/identify-by-color.git`
-1. `cd identify-by-color`
-1. `pip install -r requirements.txt`
-1. download an `all.json.gz` [DPLA data snapshot]
-1. `gunzip all.json.gz`
-1. `./download.py all.json`
-1. `./server.py`
+1. git clone https://github.com/bibliotechy/identify-by-color.git
+1. cd identify-by-color
+1. pip install -r requirements.txt
+1. download `all.json.gz` [DPLA data snapshot]
+1. gunzip all.json.gz
+1. ./download.py all.json
+1. ./server.py
 
 [Digital Public Library of America]: http://dp.la
 [here]: http://colorbrowse.club/
