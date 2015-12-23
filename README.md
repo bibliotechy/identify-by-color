@@ -18,7 +18,7 @@ around using color for access. You can see the application running [here].
 [Digital Public Library of America]: http://dp.la
 [here]: http://colorbrowse.club/
 [Cooper-Hewitt]: https://collection.cooperhewitt.org/objects/colors/
-[Python]: http://python.org/download/
+[Python 2.7]: http://python.org/download/
 [Git]: https://git-scm.com/
 [Redis]: http://redis.io
 [DPLA data snapshots]: http://dp.la/info/developers/download/
