@@ -12,17 +12,19 @@ from os.path import abspath
 from multiprocessing import Pool
 import logging
 import cooperhewitt.swatchbook as sb
+import itertools
 
 logging.basicConfig(filename='logs/deets.log',level=logging.DEBUG)
 
 def get_item_details(filename):
     filepath = abspath(filename)
-    f = open(filepath)
-    data = json.loads(f.read())
-    f.close()
     r = StrictRedis()
     essentials = []
-    for x in data:
+    for line in open(filepath):
+        if line.startswith("[") or line.startswith("]"):
+            continue
+        line = line.lstrip(",")
+        x = json.loads(line)["_source"]
         if x.get('object',None) and not r.exists("done:" + x["@id"]):
             record = {
                 "id"    : x['@id'],
@@ -36,8 +38,9 @@ def get_item_details(filename):
                     record["title"] = x['sourceResource']['title'][0]
             else:
                 record["title"] = "Untitled"
-            essentials.extend([record])
-    return essentials
+            yield record
+        else:
+            print "boo"
 
 def load_remote_image(url):
     try:
@@ -92,6 +95,6 @@ def run(deet):
 if __name__ == "__main__":
     p = Pool(4)
     deets = get_item_details(argv[1])
-    p.map(run, deets)
+    p.map(run, itertools.islice(deets, 0, None))
     p.close()
     p.join()
