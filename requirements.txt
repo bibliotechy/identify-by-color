@@ -1,0 +1,4 @@
+numpy
+redis
+pillow
+git+https://github.com/cooperhewitt/py-cooperhewitt-swatchbook.git
