@@ -39,8 +39,6 @@ def get_item_details(filename):
             else:
                 record["title"] = "Untitled"
             yield record
-        else:
-            print "boo"
 
 def load_remote_image(url):
     try:
