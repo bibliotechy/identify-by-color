@@ -1,0 +1,6 @@
+flask
+flask_paginate
+git+https://github.com/cooperhewitt/py-cooperhewitt-swatchbook.git
+numpy
+pillow
+redis
