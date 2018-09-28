@@ -2,7 +2,7 @@
 
 identify-by-color is a webapp that lets you search the [Digital Public Library
 of America] by color. It was inspired by similar work done at the Cooper-Hewitt
-around using color for access. You can see the application running [here].
+around using color for access. NO longer online.
 
 The app is a Python flask application that uses Redis to store color
 information. To populate the database you'll need to run `download.py`
